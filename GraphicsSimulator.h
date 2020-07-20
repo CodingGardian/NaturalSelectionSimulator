@@ -6,13 +6,13 @@
 #include <time.h>
 #include <math.h>
 #include <iostream>
+#include <string>
 
-#include "Manager.h"
-
+class fruit;
 class creature;
 
 template <class T>
-struct Point { // a point class for reading position
+struct Point { // a point class for reading position, instead of managing ALL of the points on the plane, I created a system to manage only the points that have creatures, fruits, etc.
 	Point() {}
 	Point(T * temp, int tempx, int tempy);
 	T * occupied = nullptr;
@@ -44,7 +44,7 @@ struct Point <fruit> {
 	Point<fruit> operator=(const Point<fruit>& point);
 };
 
-class fruit { // food for mutant, will try to eat
+class fruit { // food for creature, will try to eat
 public:
 	fruit();
 	int id;
@@ -57,6 +57,7 @@ public:
 
 
 struct mutation { // mutation to specify how the creature is afected
+	mutation(int speed, int size, int luck);
 	int speedm;
 	int sizem;
 	int luckm;
@@ -69,7 +70,7 @@ private:
 	int speed = 1;
 	int size = 1;
 	int luck = 0;
-	int energy = 50;
+	int energy = 100;
 	int food = 0;
 public:
 
@@ -83,6 +84,7 @@ public:
 
 	Point<creature>* getRefrencePoint();
 	creature* getThis() { return this; }
+	int getLuck();
 	int getSpeed();
 	int getSize();
 	int getEnergy();
@@ -103,4 +105,12 @@ namespace graphicsSimulator { // a namespace for simulating the graphics in the 
 	void placeFruit(); // places fruit aat random
 	void createCreature(); // places creature at random
 	void createCreature(mutation m);
+	mutation createMutation(); // creates mutation for creature
+	mutation createMutation(creature c);
+	bool live(creature c); // decides if a creature will live
+
+	void startTest();
+
+	template<typename T, typename X>
+	Point<T> checkClosestPoint(std::vector<Point<T>*> vec, Point<X> * point);
 };
