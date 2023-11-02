@@ -198,7 +198,7 @@ int creature::getFood() {
 	return food;
 }
 
-bool creature::foodFound() { // if a creature finds food
+bool creature::foodFound() { // checks if a creature finds food
 	Point<fruit> Fruit = graphicsSimulator::checkClosestPoint<fruit, creature>(fruitPoints, point);
 	if (point->x < (Fruit.x + 1) && point->x >(Fruit.x - 1) && point->y > (Fruit.y - 1) && point->y < (Fruit.y + 1)) {
 		Point<fruit> * temp = &Fruit;
